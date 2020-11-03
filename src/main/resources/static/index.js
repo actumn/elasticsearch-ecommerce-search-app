@@ -6,7 +6,7 @@ var app = new Vue({
     el: '#app',
     data: {
         feature: "products_only",
-        query: "autoss",
+        query: "",
         searchResponse: null,
         filters: [],
         from : 0,

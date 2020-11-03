@@ -161,8 +161,7 @@ public class ProductQueryService {
 //        queryBuilder.should(QueryBuilders.matchQuery("color", query.getQuery()));
 //        queryBuilder.should(QueryBuilders.matchQuery("brand", query.getQuery()));
 
-
-        return QueryBuilders.matchAllQuery();
+        return query.getQuery().isEmpty() ? QueryBuilders.matchAllQuery() : QueryBuilders.matchQuery("name", query.getQuery());
     }
 
     private AggregationBuilder createPossiblyFilteredAgg(Query query, String aggregationName, String fieldName) {
