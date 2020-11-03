@@ -188,7 +188,7 @@
                                             </div>
                                         </div>
                                             <div class="media-content">
-                                                <p class="title is-6">{{ hit._source.name }}</p>
+                                                <p class="title is-6" v-html="hit.highlight ? hit.highlight.name[0] : hit._source.name"></p>
                                                 <p class="subtitle is-7"><a v-on:click="filters.push({ 'key': 'brand', 'value': hit._source.brand, 'type': 'term'})">by {{ hit._source.brand }}</a></p>
                                                 <p class="subtitle is-7"><b>{{ hit._source.price }} EUR</b></p>
                                             </div>
