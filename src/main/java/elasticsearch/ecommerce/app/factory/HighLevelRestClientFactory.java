@@ -17,7 +17,7 @@ public class HighLevelRestClientFactory {
 
     @Inject
     public HighLevelRestClientFactory() {
-        this.client = new RestHighLevelClient(RestClient.builder(new HttpHost("localhost", 9200, "http")));
+        this.client = new RestHighLevelClient(RestClient.builder(new HttpHost("localhost", 8080, "http")));
     }
 
     @Singleton

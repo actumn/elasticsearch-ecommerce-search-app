@@ -61,7 +61,7 @@ var app = new Vue({
         }
         console.log("URL", url, " and query ", JSON.stringify(query))
         axios
-          .post("http://localhost:8080/search/" + url, query)
+          .post("http://localhost:4000/search/" + url, query)
           .then(response => {
             console.log("RESPONSE ", response.data)
             this.searchResponse = response.data

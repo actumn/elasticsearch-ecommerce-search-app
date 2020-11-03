@@ -2,6 +2,8 @@
 micronaut:
   application:
     name: elasticsearch-ecommerce-search-app
+  server:
+    port: 4000
   router:
     static-resources:
       default:
@@ -13,7 +15,7 @@ micronaut:
 
 ---
 elasticsearch:
-  httpHosts: "http://localhost:9200"
+  httpHosts: "http://localhost:8080"
 
 ---
 # WARNING: MASSIVW SECURITY HOLE!
