@@ -16,6 +16,7 @@ import org.elasticsearch.common.xcontent.ToXContent;
 import org.elasticsearch.common.xcontent.XContentHelper;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.MatchAllQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
@@ -150,16 +151,18 @@ public class ProductQueryService {
      * Creates regular text search query
      */
     private QueryBuilder createFullTextSearchQuery(Query query) {
-        BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
-        queryBuilder.must(QueryBuilders.multiMatchQuery(query.getQuery(), "name", "color", "brand", "material")
-                .minimumShouldMatch("66%")
-                .fuzziness(Fuzziness.AUTO));
+//        BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
+        //        queryBuilder.must(QueryBuilders.multiMatchQuery(query.getQuery(), "name", "color", "brand", "material")
+//                .minimumShouldMatch("66%")
+//                .fuzziness(Fuzziness.AUTO));
+//        queryBuilder.must(QueryBuilders.matchAllQuery());
         // increase scoring if we match in color, brand or material compared to product name
 //        queryBuilder.should(QueryBuilders.matchQuery("material", query.getQuery()));
 //        queryBuilder.should(QueryBuilders.matchQuery("color", query.getQuery()));
 //        queryBuilder.should(QueryBuilders.matchQuery("brand", query.getQuery()));
 
-        return queryBuilder;
+
+        return QueryBuilders.matchAllQuery();
     }
 
     private AggregationBuilder createPossiblyFilteredAgg(Query query, String aggregationName, String fieldName) {
@@ -201,6 +204,7 @@ public class ProductQueryService {
         for (AggregationBuilder agg : aggs) {
             searchSourceBuilder.aggregation(agg);
         }
+
         request.source(searchSourceBuilder);
         return request;
     }

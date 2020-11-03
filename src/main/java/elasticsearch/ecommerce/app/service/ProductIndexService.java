@@ -10,6 +10,8 @@ import org.elasticsearch.action.admin.indices.settings.put.UpdateSettingsRequest
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.support.WriteRequest;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
@@ -92,7 +94,7 @@ public class ProductIndexService {
                     client.indices().create(createIndexRequest, RequestOptions.DEFAULT);
                 }
 
-                BulkRequest request = new BulkRequest();
+//                BulkRequest request = new BulkRequest();
                 for (int i = 0; i < count; i++) {
                     String productName = faker.commerce().productName();
                     // This is to replace german prices with a comma with a proper decimal space...
@@ -115,18 +117,20 @@ public class ProductIndexService {
                     Product product = new Product(productName, price, color, material, id, productImage, brand, brandLogo, lastUpdated, remainingStock, commission);
                     IndexRequest indexRequest = new IndexRequest(INDEX).id(id);
                     indexRequest.source(mapper.writeValueAsString(product), XContentType.JSON);
-                    request.add(indexRequest);
+                    IndexResponse response = client.index(indexRequest, RequestOptions.DEFAULT);
+                    LOG.info("Finished indexing run, Indexed " + i);
+//                    LOG.info("Finished indexing run. Indexed [{}] documents in [{}]", response, response);
+//                    request.add(indexRequest);
 
-                    if (request.estimatedSizeInBytes() > MAX_BULK_SIZE_IN_BYTES) {
-                        BulkResponse response = client.bulk(request, RequestOptions.DEFAULT);
-                        LOG.info("Indexed [{}] documents in [{}]", response.getItems().length, response.getTook());
-                        request = new BulkRequest();
-                    }
+//                    if (request.estimatedSizeInBytes() > MAX_BULK_SIZE_IN_BYTES) {
+//                        BulkResponse response = client.bulk(request, RequestOptions.DEFAULT);
+//                        LOG.info("Indexed [{}] documents in [{}]", response.getItems().length, response.getTook());
+//                        request = new BulkRequest();
+//                    }
                 }
 
-                request.setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE);
-                BulkResponse response = client.bulk(request, RequestOptions.DEFAULT);
-                LOG.info("Finished indexing run. Indexed [{}] documents in [{}]", response.getItems().length, response.getTook());
+//                request.setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE);
+//                BulkResponse response = client.bulk(request, RequestOptions.DEFAULT);
                 return HttpStatus.OK;
             } catch (IOException e) {
                 throw new RuntimeException(e);

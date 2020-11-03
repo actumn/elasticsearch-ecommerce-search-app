@@ -24,16 +24,21 @@ public class SearchController {
 
     @Post(value = "products_only", produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
     public CompletableFuture<Response> searchProductsOnly(@Body Query query) throws IOException {
+        System.out.println("searchProductsOnly");
         return service.searchProductsOnly(query);
     }
 
     @Post(value = "products_with_aggs", produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
     public CompletableFuture<Response> searchWithAggs(@Body Query query) throws IOException {
+        System.out.println("searchWithAggs");
+
         return service.searchWithAggs(query);
     }
 
     @Post(value = "products_with_filtered_aggs", produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
     public CompletableFuture<Response> searchWithFilteredAggs(@Body Query query) throws IOException {
+        System.out.println("searchWithFilteredAggs");
+
         return service.searchWithFilteredAggs(query);
     }
 }

@@ -5,7 +5,7 @@ Vue.filter('format', function (value) {
 var app = new Vue({
     el: '#app',
     data: {
-        feature: "products_with_filtered_aggs",
+        feature: "products_only",
         query: "autoss",
         searchResponse: null,
         filters: [],
