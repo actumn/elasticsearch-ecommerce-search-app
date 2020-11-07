@@ -2,7 +2,7 @@ var app = new Vue({
     el: '#app',
     data: {
       message: "",
-      numberOfProducts: 10,
+      numberOfProducts: 100,
       synonyms: 'orangsch => orange\nkfz => autos,\nplastikk => plastik'
     },
     methods: {
